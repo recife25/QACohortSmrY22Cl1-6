@@ -1,0 +1,86 @@
+Felipe Ruiz (Phil)
+qa-cohort-summer-2022
+Fara Woolley - lab instructor
+*********
+
+Gherkin
+
+Scenario - testcase title/heading
+Given -	with pre-requisite steps 
+When - with the action steps
+Then - with the verification steps 
+
+Scenario: Verify user can sign in with valid values. 
+	Given I'm on demoblaze.com
+		and I click on sign up link
+	When I enter firstname as Felipe
+		and I enter lastname as Ruiz
+		and I enter email as feliperuiz@gmail.com
+		and I enter confirm email as feliperuiz@gmail.com
+		and I enter password as 123qwe#
+		and I enter confirm password as 123qwe#
+		and I click on sign up button 
+	Then I verify sign up is successful message is visible
+	When I click on log in 
+		and I enter login username as feliperuiz@gmail.com
+		and I enter login password as 123qwe#
+		and I click login button 
+	Then I verify user is logged in 
+
+Scenario: Verify user get error when sign up using already registered email
+	Given I'm on demoblaze.com
+		and I click on sign up link
+	When I enter first name as Felipe 
+		and I enter lastname as Ruiz
+		and I enter email as feliperuiz@gmail.com
+		and I enter confirm email feliperuiz@gmail.com
+		and I enter password as 123qwe# 
+		and I enter confirm password as 123qwe#
+		and I click on sign up button 
+	Then I verify "email is registered" error is shown test data - already registered user
+	qa - feliperuiz@gmail.com
+	preprod - preprodUser@gmail.com
+	prod - feliperuiz@gmail.com
+
+Scenario: Verify user cannot enter special characters and numbers in the name fields. 
+	Given I'm on demoblaze.com
+		and I click on Sign up link
+	When I enter firstname as felip*
+		and I enter lastname ru*7
+		and I enter email as feliperuiz@gmail.com
+		and I enter password as 123qwe#
+		and I enter confirm email as feliperuiz@gmail.com
+		and I enter confirm password as 123qwe#
+		and I click on sign up button 
+	Then I verify "numbers and special character are not allowed" error is shown below firstname field
+		and I verify "numbers and special character are not allowed" error shown below lastname field
+	When I enter firstname as felipe789()	
+		and I enter lastname as 8976*&^ru
+		and I click on sign up button 
+	Then I verify "numbers and special character are not allowed "error shown below firstname field 
+		and I verify "numbers and special character are not allowed" error is shown below lastname field 
+
+Scenario: verify user cannot sigh up with invalid email
+	Given I'm on demoblaze.com
+		and I click on sign up link
+	When I enter firstname as Felipe 
+		and I enter lastname as Ruiz
+		and I enter email %%%@%%
+		and I enter confirm email %%%@%%
+		and I enter password as 123qwe#
+		and I enter confirm password as 123qwe#
+		and I click on sign up button 
+	Then I verify "please check your email " error shown below email field
+
+Scenario: verify user error when email and confirn email donot match														
+	Given I'm on demoblaze.com
+		and I click on sign up link
+	When I enter firstname as Felipe
+		and I enter lastname as Ruiz
+		and I enter email as feliperuiz@gmail.com
+		and I enter confirm email as feliperuiz6@gmail.com
+		and I enter password as 123qwe#
+		and I enter confirm password as 123qwee#
+		and I click on sign up button 
+	Then I verify "error emails have to match" error is shown at the email fields		
+

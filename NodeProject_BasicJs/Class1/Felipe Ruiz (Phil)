@@ -1,0 +1,46 @@
+Felipe Ruiz (Phil)
+qa-cohort-summer-2022 - Class1 
+Fara Woolley - lab instructor
+*********
+
+Gherkin
+
+Scenario: verify that user can send message with valid values to DemoBlaze team using Contact feature
+	Given I am on demoblaze.com
+		and I click on contact link
+	When I enter contact email as feliperuiz@gmail.com
+		and I enter contact name as Felipe
+		and I enter message as "this is my first message"
+	Then I verify message sent successfully
+	When I click on send message button
+		and I enter my contact email as feliperuiz@gmail.com
+		and I enter my contact name as felipe 
+		and I enter my message as "this is my first message"
+	Then I verify "message sent successfully" displayed at the bottom of message field. 
+	
+Scenario: verify that user without entering values in any field gets the error message "missing fields"
+	Given I am on demoblaze.com
+		and I click on contact link
+	When I leave the contact email field with no value
+		and I leave the contact name field with no value
+		and I leave the message field with no value
+	Then I click on the send message button 
+		and I verify that the error message "missing fields" is displayed at the button of message field
+
+Scenario: verify that user enters invalid values and error message "please enter valid values" is displayed 
+	Given I am on demoblaze.com 
+		and I click on contact link
+	when I enter contact email as ####@!!!!
+		and I enter contact name as ^&%$890
+		and I enter message as &****((()))
+	Then I click on the send message button 
+		and I verify that the error message "invalid values"is displayed at bottom of message field	
+
+Scenario: verify that user enters more than 60 characters message and an error messages displays "Maximum characters allowed is 60"	
+	Given I am on demoblaze.com
+		and I click on the contact link
+	When I enter contact email as feliperuiz@gmail.com
+		and I enter contact name as felipe
+		and I enter more than 60 characters message as "more than 60 characters"
+	Then I click on the send message button 
+		and I verify that the error message "Maximum characters allowed is 60" is displayed at the bottom of the message field											
